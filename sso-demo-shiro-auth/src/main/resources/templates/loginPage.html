@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>login</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+
+                <h1>Shiro Redis</h1>
+
+            </div>
+            <h3>SSO Demo</h3>
+            <h5>默认用户 root root</h5>
+
+            <form class="m-t" role="form">
+                <div class="form-group">
+                    <input type="text" id="username" class="form-control" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" class="form-control" placeholder="密码">
+                </div>
+                <div id="error" style="display: none;"><h4><font color="red"></font></h4></div>
+                <button type="button" id="login" class="btn btn-primary block full-width m-b">登 录</button>
+
+
+                <p class="text-muted text-center"><a th:href="@{'/registerPage?redirect_url=' + ${redirect_url}}">注册一个新账号</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    
+    <script type="text/javascript" th:inline="javascript">
+    	//redirect_url
+    	var redirect_url = [[${redirect_url}]];
+    	
+    	//login
+    	$("#login").click(function(){
+    		$.ajax({
+	    		url: "/login",
+	    		data: {
+	    			username: $("#username").val(),
+	    			password: $("#password").val()
+	    		},
+	    		success: result => {
+	    			if(result.success == true){
+	    				window.location.href = redirect_url;
+	    			} else {
+	    				$("#error").find("font").html(result.data);
+	    				$("#error").show();
+	    			}
+	    		}
+    		})
+    	})
+    	
+    	//回车
+		$("body").keydown(function(event) {
+			if (event.keyCode == "13") {
+				$("#login").click();
+			}
+		})
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>register</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">Shiro Redis</h1>
+
+            </div>
+            <h3>欢迎注册</h3>
+            <p>创建一个新账户</p>
+            <form id="register_form" class="m-t" role="form">
+                <div class="form-group">
+                    <input type="text" id="username" class="form-control" placeholder="请输入用户名" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" class="form-control" placeholder="请输入密码" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password_repeat" class="form-control" placeholder="请再次输入密码" required="">
+                </div>
+                <h3 id="error" style="display: none;"><font color="red"></font></h3>
+                <button type="button" id="register" class="btn btn-primary block full-width m-b">注 册</button>
+
+                <p class="text-muted text-center"><small>已经有账户了？</small><a th:href="@{'/loginPage?redirect_url=' + ${redirect_url}}">点此登录</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<script type="text/javascript" th:inline="javascript">
+	//redirect_url
+	var redirect_url = [[${redirect_url}]];
+	
+	//register
+	$("#register").click(function(){
+		//验证密码是否一致
+		if($("#password").val() != $("#password_repeat").val()){
+			$("#error").find("font").html("密码不一致");
+			$("#error").show();
+			return;
+		}
+   		$.ajax({
+    		url: "/register",
+    		data: {
+    			username: $("#username").val(),
+    			password: $("#password").val()
+    		},
+    		success: result => {
+    			if(result.success == true){
+    				window.location.href = redirect_url;
+    			} else {
+    				$("#error").find("font").html(result.data);
+    				$("#error").show();
+    			}
+    		}
+   		})
+   	})
+   	
+   	//回车
+	$("body").keydown(function(event) {
+		if (event.keyCode == "13") {
+			$("#register").click();
+		}
+	})
+</script>
+
+</html>
