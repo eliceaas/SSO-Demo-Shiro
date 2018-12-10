@@ -16,8 +16,6 @@ public class UriUtil {
 	
 	private static final String USER_SESSION_KEY = "USER_SESSION";
 	
-	private static final String UNAUTH_METHOD_NAME = "unAuth";
-	
 	public static String getRedisHost() {
 		return REDIS_HOST;
 	}
@@ -48,10 +46,6 @@ public class UriUtil {
 	
 	public static String getUserSessionKey() {
 		return USER_SESSION_KEY;
-	}
-	
-	public static String getUnAuthMethodName() {
-		return UNAUTH_METHOD_NAME;
 	}
 
 }
