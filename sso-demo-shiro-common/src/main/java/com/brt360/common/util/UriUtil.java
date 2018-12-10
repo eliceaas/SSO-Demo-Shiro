@@ -14,6 +14,10 @@ public class UriUtil {
 	
 	private static final String CLIENT2_HOST = "http://localhost:8082";
 	
+	private static final String USER_SESSION_KEY = "USER_SESSION";
+	
+	private static final String UNAUTH_METHOD_NAME = "unAuth";
+	
 	public static String getRedisHost() {
 		return REDIS_HOST;
 	}
@@ -40,6 +44,14 @@ public class UriUtil {
 	
 	public static String getClient2Host() {
 		return CLIENT2_HOST;
+	}
+	
+	public static String getUserSessionKey() {
+		return USER_SESSION_KEY;
+	}
+	
+	public static String getUnAuthMethodName() {
+		return UNAUTH_METHOD_NAME;
 	}
 
 }

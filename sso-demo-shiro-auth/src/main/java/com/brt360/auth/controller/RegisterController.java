@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.brt360.common.redisDB.RoleDB;
 import com.brt360.common.redisDB.UserDB;
+import com.brt360.common.util.UriUtil;
 
 @Controller
 public class RegisterController {
@@ -57,6 +58,13 @@ public class RegisterController {
 			Subject subject = SecurityUtils.getSubject();
 			UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
 			subject.login(usernamePasswordToken);
+			
+			//用户信息存入session
+			JSONObject user = new JSONObject();
+			user.put("username", username);
+			user.put("password", userDB.get(username));
+			user.put("roles", roleDB.get(username));
+			subject.getSession().setAttribute(UriUtil.getUserSessionKey(), user);
 			
 			result.put("success", true);
 			result.put("data", "注册成功");
